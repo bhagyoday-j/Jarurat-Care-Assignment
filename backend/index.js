@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { logger } from './utils/logger.js';
+import { connectDB } from './utils/mongodb.js';
+import { initializeFAQCache } from './services/faqService.js';
 
 // Routes
 import chatRoutes from './routes/chatRoutes.js';
@@ -9,6 +11,7 @@ import contactRoutes from './routes/contactRoutes.js';
 import patientRoutes from './routes/patientRoutes.js';
 import volunteerRoutes from './routes/volunteerRoutes.js';
 import ragRoutes from './routes/ragRoutes.js';
+import faqRoutes from './routes/faqRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -44,6 +47,7 @@ app.use('/api/contacts', contactRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/volunteers', volunteerRoutes);
 app.use('/api/rag', ragRoutes);
+app.use('/api/faq', faqRoutes);
 
 // 404 handler
 app.use((req, res) => {
@@ -56,9 +60,27 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  logger.info(`Jarurat Care Backend Server running on port ${PORT}`);
-  logger.info(`CORS enabled for: ${FRONTEND_URL}`);
-  logger.info(`Frontend URL: ${FRONTEND_URL}`);
-});
+// Connect to MongoDB and start server
+async function startServer() {
+  try {
+    // Connect to MongoDB Atlas
+    await connectDB();
+
+    // Initialize FAQ cache from MongoDB
+    await initializeFAQCache();
+    logger.info('FAQ cache initialized successfully');
+
+    // Start server
+    app.listen(PORT, () => {
+      logger.info(`Jarurat Care Backend Server running on port ${PORT}`);
+      logger.info(`CORS enabled for: ${FRONTEND_URL}`);
+      logger.info(`Frontend URL: ${FRONTEND_URL}`);
+      logger.info(`MongoDB connected - FAQ system active`);
+    });
+  } catch (error) {
+    logger.error('Failed to start server', error.message);
+    process.exit(1);
+  }
+}
+
+startServer();
