@@ -62,10 +62,10 @@ const Register = () => {
     <div className="bg-bgSection min-h-screen py-20">
       <SectionWrapper className="max-w-[1100px] mx-auto px-8">
         <div className="space-y-4 mb-16 text-center">
-          <div className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold mx-auto">Get Involved</div>
-          <h1 className="text-4xl md:text-5xl font-bold text-primary leading-tight mb-4">Get Involved or Request Support</h1>
+          <div className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold mx-auto">Join Us</div>
+          <h1 className="text-4xl md:text-5xl font-bold text-primary leading-tight mb-4">Seek Support or Become a Mentor</h1>
           <p className="text-textMuted text-lg max-w-2xl mx-auto leading-relaxed">
-            Whether you need assistance or want to offer your skills to help others, you are in the right place.
+            Whether you're facing a cancer diagnosis or want to support survivors, there's a place for you in our caring community.
           </p>
         </div>
 
@@ -76,26 +76,27 @@ const Register = () => {
               className={`flex-1 py-6 text-lg font-medium transition-colors ${activeTab === 'patient' ? 'text-secondary border-b-2 border-secondary bg-bgSection/50' : 'text-textMuted hover:bg-bgSection/30 hover:text-textPrimary'}`}
               onClick={() => { setActiveTab('patient'); setIsSubmitted(false); }}
             >
-              Patient Support
+              I Need Support
             </button>
             <button
               className={`flex-1 py-6 text-lg font-medium transition-colors ${activeTab === 'volunteer' ? 'text-secondary border-b-2 border-secondary bg-bgSection/50' : 'text-textMuted hover:bg-bgSection/30 hover:text-textPrimary'}`}
               onClick={() => { setActiveTab('volunteer'); setIsSubmitted(false); }}
             >
-              Volunteer Registration
+              I Want to Help
             </button>
           </div>
 
           <div className="p-8 md:p-12">
             {isSubmitted ? (
               <div className="min-h-[400px] flex items-center justify-center">
-                <FormSuccess message={activeTab === 'patient' ? "Your request for support has been received. Our team will contact you shortly." : "Thank you for volunteering! We have received your application and will be in touch."} />
+                <FormSuccess message={activeTab === 'patient' ? "Thank you for reaching out. We understand your journey. Our team will connect with you shortly to provide personalized support." : "Thank you for opening your heart to help others. We will review your application and be in touch soon."} />
               </div>
             ) : (
               <>
                 {/* Patient Form */}
                 {activeTab === 'patient' && (
                   <form onSubmit={handleSubmitPatient(onSubmitPatient)} className="space-y-6">
+                    <p className="text-textMuted text-sm mb-6 p-4 bg-bgLight rounded-2xl">We're here to support you through every step of your cancer journey. Your information is confidential and will help us provide personalized care.</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-medium text-textPrimary mb-2">Full Name</label>
@@ -135,8 +136,8 @@ const Register = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-textPrimary mb-2">Health Concern</label>
-                      <textarea {...registerPatient("concern", { required: "Please describe your concern" })} className="w-full bg-bgLight rounded-2xl border border-border p-5 focus:ring-2 focus:ring-secondary/30 outline-none min-h-[120px]"></textarea>
+                      <label className="block text-sm font-medium text-textPrimary mb-2">Tell Us About Your Cancer Journey</label>
+                      <textarea {...registerPatient("concern", { required: "Please tell us about your situation" })} placeholder="Stage of cancer, current treatment, concerns, or support needed..." className="w-full bg-bgLight rounded-2xl border border-border p-5 focus:ring-2 focus:ring-secondary/30 outline-none min-h-[120px]"></textarea>
                       {errorsPatient.concern && <p className="text-red-500 text-sm mt-1">{errorsPatient.concern.message}</p>}
                     </div>
 
@@ -168,6 +169,7 @@ const Register = () => {
                 {/* Volunteer Form */}
                 {activeTab === 'volunteer' && (
                   <form onSubmit={handleSubmitVolunteer(onSubmitVolunteer)} className="space-y-6">
+                    <p className="text-textMuted text-sm mb-6 p-4 bg-bgLight rounded-2xl">Join our network of compassionate healthcare professionals and survivors. Together, we empower cancer patients to reclaim their lives.</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-medium text-textPrimary mb-2">Full Name</label>
@@ -188,15 +190,16 @@ const Register = () => {
                         {errorsVolunteer.phone && <p className="text-red-500 text-sm mt-1">{errorsVolunteer.phone.message}</p>}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-textPrimary mb-2">Profession</label>
+                        <label className="block text-sm font-medium text-textPrimary mb-2">Your Role in Cancer Care</label>
                         <select {...registerVolunteer("profession", { required: "Profession is required" })} className="w-full bg-bgLight rounded-2xl border border-border h-14 px-5 focus:ring-2 focus:ring-secondary/30 outline-none appearance-none">
                           <option value="">Select...</option>
-                          <option value="Doctor">Doctor</option>
-                          <option value="Nurse">Nurse</option>
+                          <option value="Oncologist">Oncologist</option>
+                          <option value="Oncology Nurse">Oncology Nurse</option>
                           <option value="Pharmacist">Pharmacist</option>
-                          <option value="Counselor">Counselor</option>
-                          <option value="Admin">Admin</option>
-                          <option value="Other">Other</option>
+                          <option value="Counselor/Psychologist">Counselor/Psychologist</option>
+                          <option value="Nutritionist">Nutritionist</option>
+                          <option value="Cancer Survivor">Cancer Survivor</option>
+                          <option value="Other Healthcare Professional">Other Healthcare Professional</option>
                         </select>
                         {errorsVolunteer.profession && <p className="text-red-500 text-sm mt-1">{errorsVolunteer.profession.message}</p>}
                       </div>
@@ -216,20 +219,20 @@ const Register = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-textPrimary mb-2">Skills / Experience (Optional)</label>
-                      <textarea {...registerVolunteer("skills")} className="w-full bg-bgLight rounded-2xl border border-border p-5 focus:ring-2 focus:ring-secondary/30 outline-none min-h-[100px]"></textarea>
+                      <label className="block text-sm font-medium text-textPrimary mb-2">Your Experience & Skills (Optional)</label>
+                      <textarea {...registerVolunteer("skills")} placeholder="Years of experience in cancer care, specializations, languages you speak, any training..." className="w-full bg-bgLight rounded-2xl border border-border p-5 focus:ring-2 focus:ring-secondary/30 outline-none min-h-[100px]"></textarea>
                     </div>
 
                     <div>
                       <label className="flex items-start gap-3 cursor-pointer mt-4">
                         <input type="checkbox" {...registerVolunteer("agreement", { required: "You must agree to the terms" })} className="mt-1 text-secondary focus:ring-secondary rounded" />
-                        <span className="text-sm text-textMuted">I agree to the Jarurat Care Foundation volunteer code of conduct and confirm that the information provided is accurate.</span>
+                        <span className="text-sm text-textMuted">I agree to uphold the values of compassion, confidentiality, and patient-centered care, and confirm that the information provided is accurate.</span>
                       </label>
                       {errorsVolunteer.agreement && <p className="text-red-500 text-sm mt-1">{errorsVolunteer.agreement.message}</p>}
                     </div>
 
                     <button type="submit" className="bg-secondary text-white px-8 py-4 rounded-full shadow-soft hover:scale-[1.02] transition-transform duration-300 font-medium w-full md:w-auto">
-                      Register as Volunteer
+                      Join as Mentor
                     </button>
                   </form>
                 )}
