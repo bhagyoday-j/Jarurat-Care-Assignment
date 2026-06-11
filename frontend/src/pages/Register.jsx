@@ -10,16 +10,50 @@ const Register = () => {
   const { register: registerPatient, handleSubmit: handleSubmitPatient, formState: { errors: errorsPatient }, reset: resetPatient } = useForm();
   const { register: registerVolunteer, handleSubmit: handleSubmitVolunteer, formState: { errors: errorsVolunteer }, reset: resetVolunteer } = useForm();
 
-  const onSubmitPatient = (data) => {
-    console.log("Patient Support Request:", data);
-    setIsSubmitted(true);
-    resetPatient();
+  const onSubmitPatient = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/patients', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        resetPatient();
+      } else {
+        console.error('Failed to submit patient registration:', response.statusText);
+        alert('Failed to submit. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting patient registration:', error);
+      alert('Error submitting form. Please try again.');
+    }
   };
 
-  const onSubmitVolunteer = (data) => {
-    console.log("Volunteer Registration:", data);
-    setIsSubmitted(true);
-    resetVolunteer();
+  const onSubmitVolunteer = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/volunteers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        resetVolunteer();
+      } else {
+        console.error('Failed to submit volunteer registration:', response.statusText);
+        alert('Failed to submit. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting volunteer registration:', error);
+      alert('Error submitting form. Please try again.');
+    }
   };
 
   return (

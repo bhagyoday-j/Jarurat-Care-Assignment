@@ -8,10 +8,27 @@ const Contact = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setIsSubmitted(true);
-    reset();
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        reset();
+      } else {
+        console.error('Failed to submit contact form:', response.statusText);
+        alert('Failed to submit. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting contact:', error);
+      alert('Error submitting form. Please try again.');
+    }
   };
 
   return (

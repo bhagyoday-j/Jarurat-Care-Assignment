@@ -29,30 +29,21 @@ const ChatBot = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch('http://localhost:3000/api/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_AI_API_KEY}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'llama3-8b-8192', // Typical Groq model
-          messages: [
-            {
-              role: 'system',
-              content: `You are a warm, helpful assistant for Jarurat Care Foundation, a healthcare NGO in India.
-Help users with: patient registration, volunteer sign-up, available services, 
-health FAQs, and government health schemes. Be concise (max 3 sentences).
-Always recommend consulting a real doctor for medical advice.`
-            },
-            ...newMessages
-          ]
+          question: text
         })
       });
 
       const data = await response.json();
-      if (data.choices && data.choices[0] && data.choices[0].message) {
-        setMessages([...newMessages, { role: 'assistant', content: data.choices[0].message.content }]);
+      if (data.reply) {
+        setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
+      } else if (data.error) {
+        throw new Error(data.error);
       } else {
         throw new Error("Invalid response");
       }
