@@ -22,6 +22,10 @@ function App() {
     <Router>
       <ScrollToTop />
       <div className="flex flex-col min-h-screen">
+        {/* Demo Disclaimer Banner */}
+        <div className="bg-red-600 text-red-100 px-4 py-2 text-xs text-center">
+          <p>This is a demo website created as part of an assignment and is not affiliated with the official Jarurat Care website. Initial loading may be slower as the backend is hosted on Render's free-tier service.</p>
+        </div>
         <Navbar />
         <main className="flex-1">
           <Routes>
