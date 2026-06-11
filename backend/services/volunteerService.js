@@ -1,4 +1,4 @@
-import { appendJSON, getAll } from '../utils/db.js';
+import { Volunteer } from '../models/volunteer.js';
 import { logger } from '../utils/logger.js';
 
 /**
@@ -6,7 +6,7 @@ import { logger } from '../utils/logger.js';
  */
 export async function registerVolunteer(volunteerData) {
   try {
-    const volunteer = await appendJSON('volunteers.json', {
+    const volunteer = await Volunteer.create({
       name: volunteerData.name,
       email: volunteerData.email,
       phone: volunteerData.phone,
@@ -17,8 +17,8 @@ export async function registerVolunteer(volunteerData) {
       status: 'pending' // pending, approved, rejected
     });
     
-    logger.info('Volunteer registered', { volunteerId: volunteer.id, name: volunteer.name });
-    return volunteer;
+    logger.info('Volunteer registered', { volunteerId: volunteer._id, name: volunteer.name });
+    return volunteer.toObject();
   } catch (error) {
     logger.error('Failed to register volunteer', error.message);
     throw error;
@@ -30,7 +30,8 @@ export async function registerVolunteer(volunteerData) {
  */
 export async function getAllVolunteers() {
   try {
-    return await getAll('volunteers.json');
+    const volunteers = await Volunteer.find().sort({ createdAt: -1 }).lean();
+    return volunteers;
   } catch (error) {
     logger.error('Failed to get volunteers', error.message);
     throw error;
@@ -42,8 +43,8 @@ export async function getAllVolunteers() {
  */
 export async function getVolunteersByProfession(profession) {
   try {
-    const volunteers = await getAll('volunteers.json');
-    return volunteers.filter(v => v.profession.toLowerCase() === profession.toLowerCase());
+    const volunteers = await Volunteer.find({ profession: { $regex: profession, $options: 'i' } }).sort({ createdAt: -1 }).lean();
+    return volunteers;
   } catch (error) {
     logger.error('Failed to get volunteers by profession', error.message);
     throw error;
@@ -55,8 +56,8 @@ export async function getVolunteersByProfession(profession) {
  */
 export async function getPendingVolunteers() {
   try {
-    const volunteers = await getAll('volunteers.json');
-    return volunteers.filter(v => v.status === 'pending');
+    const volunteers = await Volunteer.find({ status: 'pending' }).sort({ createdAt: -1 }).lean();
+    return volunteers;
   } catch (error) {
     logger.error('Failed to get pending volunteers', error.message);
     throw error;

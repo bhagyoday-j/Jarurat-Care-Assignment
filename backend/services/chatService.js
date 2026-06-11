@@ -1,4 +1,4 @@
-import { appendJSON, getAll } from '../utils/db.js';
+import { Chat } from '../models/chat.js';
 import { logger } from '../utils/logger.js';
 import { callLLMWithContext, callLLM } from './llm.js';
 import { queryRAG } from './rag.js';
@@ -52,7 +52,7 @@ export async function handleChat(message, useRAG = true) {
     }
 
     // Store chat message with source
-    const chatRecord = await appendJSON('chats.json', {
+    const chatRecord = await Chat.create({
       message,
       response: response.content,
       provider: response.provider,
@@ -82,7 +82,7 @@ export async function handleChat(message, useRAG = true) {
  */
 export async function getAllChats() {
   try {
-    const chats = await getAll('chats.json');
+    const chats = await Chat.find().sort({ createdAt: -1 }).lean();
     return chats;
   } catch (error) {
     logger.error('Failed to get chats', error.message);

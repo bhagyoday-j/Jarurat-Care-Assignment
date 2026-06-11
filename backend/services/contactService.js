@@ -1,4 +1,4 @@
-import { appendJSON, getAll } from '../utils/db.js';
+import { Contact } from '../models/contact.js';
 import { logger } from '../utils/logger.js';
 
 /**
@@ -6,15 +6,15 @@ import { logger } from '../utils/logger.js';
  */
 export async function createContact(contactData) {
   try {
-    const contact = await appendJSON('contacts.json', {
+    const contact = await Contact.create({
       name: contactData.name,
       email: contactData.email,
       subject: contactData.subject,
       message: contactData.message
     });
     
-    logger.info('Contact message created', { contactId: contact.id, email: contact.email });
-    return contact;
+    logger.info('Contact message created', { contactId: contact._id, email: contact.email });
+    return contact.toObject();
   } catch (error) {
     logger.error('Failed to create contact', error.message);
     throw error;
@@ -26,7 +26,8 @@ export async function createContact(contactData) {
  */
 export async function getAllContacts() {
   try {
-    return await getAll('contacts.json');
+    const contacts = await Contact.find().sort({ createdAt: -1 }).lean();
+    return contacts;
   } catch (error) {
     logger.error('Failed to get contacts', error.message);
     throw error;
