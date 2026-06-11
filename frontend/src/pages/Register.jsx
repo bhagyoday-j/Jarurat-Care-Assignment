@@ -12,7 +12,8 @@ const Register = () => {
 
   const onSubmitPatient = async (data) => {
     try {
-      const response = await fetch('http://localhost:3000/api/patients', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${backendUrl}/api/patients`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,7 +36,8 @@ const Register = () => {
 
   const onSubmitVolunteer = async (data) => {
     try {
-      const response = await fetch('http://localhost:3000/api/volunteers', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      const response = await fetch(`${backendUrl}/api/volunteers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
