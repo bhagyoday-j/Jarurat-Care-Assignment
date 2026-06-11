@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="max-w-[1440px] mx-auto w-full px-8 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-primary font-bold text-2xl flex items-center gap-2">
-          🏥 Jarurat Care
+          Jarurat Care
         </Link>
 
         {/* Center Nav Links */}
