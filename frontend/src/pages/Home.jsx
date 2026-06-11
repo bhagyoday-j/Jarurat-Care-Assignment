@@ -193,12 +193,12 @@ const Home = () => {
       {/* 7. Blog Section */}
       <SectionWrapper className="bg-bgLight py-[100px]">
         <div className="max-w-[1280px] mx-auto px-8">
-          <div className="flex justify-between items-end mb-12">
-            <div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
+            <div className="space-y-2">
               <div className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold mb-4">News & Insights</div>
-              <h2 className="text-4xl md:text-[48px] font-bold text-primary">Latest from our network</h2>
+              <h2 className="text-4xl md:text-[48px] font-bold text-primary leading-tight">Latest from our network</h2>
             </div>
-            <Link to="/blogs" className="hidden md:flex text-secondary font-medium items-center gap-2 hover:gap-3 transition-all">
+            <Link to="/blogs" className="text-secondary font-medium items-center gap-2 hover:gap-3 transition-all inline-flex whitespace-nowrap">
               View all posts <ArrowRight size={18} />
             </Link>
           </div>
@@ -208,12 +208,14 @@ const Home = () => {
             <div className="lg:col-span-2 bg-white rounded-[32px] shadow-soft overflow-hidden group hover:-translate-y-1 transition-all duration-300">
               <div className="h-[300px] md:h-[400px] w-full bg-gradient-to-br from-secondary/40 to-primary/40 relative"></div>
               <div className="p-8 md:p-10">
-                <span className="bg-accent/10 text-accent text-xs font-bold rounded-full px-4 py-2 uppercase tracking-wider mb-4 inline-block">Events</span>
-                <h3 className="text-3xl font-bold text-primary mb-4 group-hover:text-secondary transition-colors">Community Health Camp in Pune</h3>
-                <p className="text-textMuted text-lg mb-6 line-clamp-2">Last week, our volunteers organized a free health checkup camp in Pune, reaching over 500 residents with essential screenings and medications.</p>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="bg-accent/10 text-accent text-xs font-bold rounded-full px-4 py-2 uppercase tracking-wider">Events</span>
+                </div>
+                <h3 className="text-3xl font-bold text-primary mb-4 group-hover:text-secondary transition-colors leading-tight">Community Health Camp in Pune</h3>
+                <p className="text-textMuted text-base mb-8 leading-relaxed">Last week, our volunteers organized a free health checkup camp in Pune, reaching over 500 residents with essential screenings and medications.</p>
+                <div className="flex items-center justify-between pt-6 border-t border-border">
                   <span className="text-sm text-textMuted font-medium">May 12, 2026</span>
-                  <Link to="/blogs/1" className="text-secondary font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                  <Link to="/blogs/1" className="text-secondary font-medium flex items-center gap-2 group-hover:gap-3 transition-all hover:text-secondary/80">
                     Read more <ChevronRight size={18} />
                   </Link>
                 </div>
@@ -221,15 +223,15 @@ const Home = () => {
             </div>
 
             {/* Smaller Posts */}
-            <div className="space-y-8">
+            <div className="space-y-8 flex flex-col">
               <div className="bg-white rounded-[32px] shadow-soft overflow-hidden group hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
                 <div className="h-[200px] w-full bg-gradient-to-tr from-accent/30 to-bgLight relative"></div>
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     <span className="bg-accent/10 text-accent text-xs font-bold rounded-full px-3 py-1 uppercase tracking-wider mb-3 inline-block">Stories</span>
-                    <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-secondary transition-colors line-clamp-2">Volunteer Spotlight: Dr. Meera Shah</h3>
+                    <h3 className="text-lg font-bold text-primary mb-3 group-hover:text-secondary transition-colors leading-tight">Volunteer Spotlight: Dr. Meera Shah</h3>
                   </div>
-                  <div className="flex items-center justify-between mt-4">
+                  <div className="pt-4 border-t border-border">
                     <span className="text-sm text-textMuted font-medium">May 05, 2026</span>
                   </div>
                 </div>
@@ -239,23 +241,37 @@ const Home = () => {
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     <span className="bg-accent/10 text-accent text-xs font-bold rounded-full px-3 py-1 uppercase tracking-wider mb-3 inline-block">Guide</span>
-                    <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-secondary transition-colors line-clamp-2">Accessing Free Medicines Under PM-JAY</h3>
+                    <h3 className="text-lg font-bold text-primary mb-3 group-hover:text-secondary transition-colors leading-tight">Accessing Free Medicines Under PM-JAY</h3>
                   </div>
-                  <div className="flex items-center justify-between mt-4">
+                  <div className="pt-4 border-t border-border">
                     <span className="text-sm text-textMuted font-medium">April 28, 2026</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div className="md:hidden mt-12 text-center">
+            <Link to="/blogs" className="bg-secondary text-white px-8 py-4 rounded-full shadow-soft hover:scale-[1.03] transition-transform duration-300 font-medium inline-flex items-center gap-2">
+              View all posts <ArrowRight size={18} />
+            </Link>
+          </div>
         </div>
       </SectionWrapper>
 
       {/* 8. Contact / Registration Form */}
-      <div id="register-section">
-        {/* Using Register component to reuse form but it has padding-top from its class. We can wrap it. */}
-        <Register />
-      </div>
+      <SectionWrapper className="bg-bgSection py-[100px]" id="register-section">
+        <div className="max-w-[1100px] mx-auto px-8">
+          <div className="space-y-4 mb-16 text-center">
+            <div className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold mx-auto">Get Involved</div>
+            <h2 className="text-4xl md:text-[48px] font-bold text-primary leading-tight">Get Involved or Request Support</h2>
+            <p className="text-textMuted text-lg max-w-2xl mx-auto leading-relaxed">
+              Whether you need assistance or want to offer your skills to help others, you are in the right place.
+            </p>
+          </div>
+          <Register />
+        </div>
+      </SectionWrapper>
 
     </div>
   );

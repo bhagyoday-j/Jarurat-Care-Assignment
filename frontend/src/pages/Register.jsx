@@ -59,11 +59,12 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-bgLight min-h-screen py-20">
+    <div className="bg-bgSection min-h-screen py-20">
       <SectionWrapper className="max-w-[1100px] mx-auto px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">Get Involved or Request Support</h1>
-          <p className="text-textMuted text-lg max-w-2xl mx-auto">
+        <div className="space-y-4 mb-16 text-center">
+          <div className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold mx-auto">Get Involved</div>
+          <h1 className="text-4xl md:text-5xl font-bold text-primary leading-tight mb-4">Get Involved or Request Support</h1>
+          <p className="text-textMuted text-lg max-w-2xl mx-auto leading-relaxed">
             Whether you need assistance or want to offer your skills to help others, you are in the right place.
           </p>
         </div>
